@@ -11,14 +11,20 @@
 <h1>Welkom op het netland beheerderspaneel </h1>
 <h2>Series</h2>
 <div class="title">
-<p class="text">Titel</p><p class="text">Rating</p>
+
 </div>
 <?php
 require 'includes/connect.php';
 
+echo "<a href='index.php?sort=Title'>Title</a><a href='index.php?sort=Rating'>Rating</a>";
+
 /*print de info*/
 echo "<table>";
+if (isset($_GET['sort'])){
+    $data = $pdo->query("SELECT * FROM series ORDER BY " . $_GET['sort'] . " ASC")->fetchAll();
+}else{
 $data = $pdo->query("SELECT * FROM series")->fetchAll();
+}
 echo "<tr>";
 foreach ($data as $row) {
     echo "<td>". $row['Title']. "</td>";
@@ -31,11 +37,16 @@ echo "</table>"
 
 <h2>Films</h2>
 <div class="title">
-<p class="text">Titel</p><p class="text">Duur</p>
 </div>
 <?php
+echo "<a href='index.php?sortF=Title'>Title</a><a href='index.php?sortF=Duur'>Duur</a>";
+
 echo "<table>";
+if (isset($_GET['sortF'])){
+    $data = $pdo->query("SELECT * FROM films ORDER BY " . $_GET['sortF'] . " ASC")->fetchAll();
+}else{
 $data = $pdo->query("SELECT * FROM films")->fetchAll();
+}
 echo "<tr>";
 foreach ($data as $row) {
     echo "<td>". $row['Title']."</td>"; 
